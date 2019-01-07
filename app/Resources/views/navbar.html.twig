@@ -1,0 +1,11 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url('parserMainPage') }}">Parser</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="{{ app.request.get( '_route' ) == 'parserMainPage' ? 'active' }}"><a href="{{ url('parserMainPage') }}">Home</a></li>
+            <li class="{{ app.request.get( '_route' ) == 'parserHistory' ? 'active' }}"><a href="{{ url('parserHistory') }}">History</a></li>
+        </ul>
+    </div>
+</nav>

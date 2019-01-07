@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="title">Google Parser</h1>
+
+    {% for flash_message in app.session.flashbag.get('notice') %}
+        <div id="form-message">{{ flash_message }}</div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+
+        <h1 class="goodLuck">Good Luck!</h1>
+
+        <div class="content-form">
+
+            <div class="left-row">
+                <div class="form-group">
+                    <p>Домен <span>*</span></p>
+                    <span class="icon-case"><i class="fa fa-eye"></i></span>
+                    {{ form_widget(form.domainName) }}
+                    <div class="validation">
+                        {{ form_errors(form.domainName) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p>PROXY:PORT</p>
+                    <span class="icon-case"><i class="fa fa-bug"></i></span>
+                    <input type="text" name="proxy" id="proxy" value="{{ proxy }}">
+                    <div class="validation"></div>
+                </div>
+            </div>
+
+            <div class="right-row">
+                <div class="form-group">
+                    <p>Ключевое слово <span>*</span></p>
+                    <span class="icon-case"><i class="fa fa-filter"></i></span>
+                    {{ form_widget(form.keyword) }}
+                    <div class="validation">
+                        {{ form_errors(form.keyword) }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p>PROXY type</p>
+                    <span class="icon-case"><i class="fa fa-bug"></i></span>
+                    <input type="text" name="proxyType" id="proxyType" value="{{ proxyType }}">
+                    <div class="validation"></div>
+                </div>
+            </div>
+        </div>
+
+        {{ form_widget(form.go, {'attr': {'class': 'main-submit'}}) }}
+
+    {{ form_end(form) }}
+{% endblock %}

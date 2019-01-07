@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Доменное имя</th>
+                        <th>Ключевое слово</th>
+                        <th>Позиция в Google</th>
+                        <th>Дата выборки</th>
+                    </tr>
+                </thead>
+                {% for history in histories %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ history.domainName }}</td>
+                        <td>{{ history.keyword }}</td>
+                        <td>{{ history.position }}</td>
+                        <td>{{ history.sampleDate | date( "d.m.Y H:i" ) }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="navigation">
+                {{ knp_pagination_render( histories ) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
