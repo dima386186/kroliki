@@ -2,6 +2,15 @@
 
 {% block body %}
 
+    <div class="container">
+        <div class="row">
+            {% for flash_message in app.session.flashbag.get('curlErrors') %}
+                <div class="alert-danger">{{ flash_message }}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+
     <h1 class="title">Google Parser</h1>
 
     {% for flash_message in app.session.flashbag.get('notice') %}

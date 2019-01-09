@@ -45,7 +45,7 @@ class CurlHandler
 	/**
 	 * @var array
 	 */
-	protected $errors = array();
+	public $errors = array();
 
 	/**
 	 * CurlHandler constructor.
@@ -57,10 +57,10 @@ class CurlHandler
 	 */
 	public function __construct( $keyword, $domainName, $proxy, $proxyType )
 	{
-		$this->multiCurl = new MultiCurl;
-		$this->keyword = $keyword;
+		$this->multiCurl  = new MultiCurl;
+		$this->keyword    = $keyword;
 		$this->domainName = $domainName;
-		$this->proxy = $proxy;
+		$this->proxy      = $proxy;
 
 		if ( $proxyType ) {
 			$this->proxyType = "{$proxyType}://";
@@ -76,12 +76,12 @@ class CurlHandler
 
 		for ( $i = 0; $i <= $max; $i += 10 ) {
 			$this->multiCurl->addGet( 'http://www.google.com/search', [
-				'hl' => 'ru',
-				'tbo' => 'd',
-				'site' => '',
+				'hl'     => 'ru',
+				'tbo'    => 'd',
+				'site'   => '',
 				'source' => 'hp',
-				'q' => $this->keyword,
-				'start' => $i
+				'q'      => $this->keyword,
+				'start'  => $i
 			] );
 		}
 
@@ -95,8 +95,9 @@ class CurlHandler
 	public function curlSettings()
 	{
 		$this->multiCurl->setOpts( [
-			CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.205 Safari/534.16',
-			CURLOPT_REFERER, 'https://www.google.com',
+			CURLOPT_USERAGENT      => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.205 Safari/534.16',
+			CURLOPT_REFERER,
+			'https://www.google.com',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_FOLLOWLOCATION => true
 		] );
@@ -108,15 +109,15 @@ class CurlHandler
 
 	public function curlSuccess()
 	{
-		$this->multiCurl->success( function( $instance ) {
+		$this->multiCurl->success( function ( $instance ) {
 
 			$document = phpQuery::newDocument( $instance->response );
 
 			$cites = $document->find( 'cite' );
-			$nav = $document->find( '.cur' );
+			$nav   = $document->find( '.cur' );
 
 			$place = '';
-			$page = '';
+			$page  = '';
 
 			foreach ( $cites as $key => $cite ) {
 				$pq = pq( $cite );
@@ -142,13 +143,12 @@ class CurlHandler
 
 	public function curlError()
 	{
-		$this->multiCurl->error( function( $instance ) {
-			echo $instance->errorMessage;
+		$this->multiCurl->error( function ( $instance ) {
 			$this->errors[] = array(
-				'url' => $instance->url,
-				'code' => $instance->errorCode,
+				'url'     => $instance->url,
+				'code'    => $instance->errorCode,
 				'message' => $instance->errorMessage
 			);
-		});
+		} );
 	}
 }

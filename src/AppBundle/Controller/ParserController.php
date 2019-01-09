@@ -33,14 +33,13 @@ class ParserController extends Controller
 			$curlHandler = new CurlHandler( $keyword, $domainName, $proxy, $proxyType );
 			$result      = $curlHandler->result ? $curlHandler->result : 0;
 
-			$this->addFlash( 'notice', "Выбранный домен имеет - {$result} позицию" );
-			$this->insertHistory( $data, $result );
+			$this->mainSystem( $curlHandler->errors, $result, $data );
 		}
 
 		return $this->render( 'parser/main.html.twig', [
-			'form'      => $form->createView(),
-			'proxy'     => $proxy,
-			'proxyType' => $proxyType
+			'form'       => $form->createView(),
+			'proxy'      => $proxy,
+			'proxyType'  => $proxyType
 		] );
 	}
 
@@ -79,5 +78,24 @@ class ParserController extends Controller
 		$em->persist( $history );
 
 		$em->flush();
+	}
+
+	/**
+	 * @param array $errors
+	 * @param integer $result
+	 * @param object $data
+	 */
+	public function mainSystem( $errors, $result, $data )
+	{
+		if ( count( $errors ) ) {
+			$arr = [];
+			foreach ($errors as $k => $v) {
+				$arr[] = $v['message'];
+			}
+			$this->addFlash( 'curlErrors', join( ',', $arr ) );
+		} else {
+			$this->addFlash( 'notice', "Выбранный домен имеет - {$result} позицию" );
+			$this->insertHistory( $data, $result );
+		}
 	}
 }
