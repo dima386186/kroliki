@@ -70,7 +70,7 @@ class ParserController extends Controller
 	 * @param object $history
 	 * @param integer $result
 	 */
-	public function insertHistory( $history, $result )
+	protected function insertHistory( $history, $result )
 	{
 		$em = $this->getDoctrine()->getManager();
 
@@ -85,7 +85,7 @@ class ParserController extends Controller
 	 * @param integer $result
 	 * @param object $data
 	 */
-	public function mainSystem( $errors, $result, $data )
+	protected function mainSystem( $errors, $result, $data )
 	{
 		if ( count( $errors ) ) {
 			$arr = [];

@@ -92,12 +92,11 @@ class CurlHandler
 		$this->multiCurl->start();
 	}
 
-	public function curlSettings()
+	protected function curlSettings()
 	{
 		$this->multiCurl->setOpts( [
 			CURLOPT_USERAGENT      => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.205 Safari/534.16',
-			CURLOPT_REFERER,
-			'https://www.google.com',
+			CURLOPT_REFERER        => 'https://www.google.com',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_FOLLOWLOCATION => true
 		] );
@@ -107,7 +106,7 @@ class CurlHandler
 		}
 	}
 
-	public function curlSuccess()
+	protected function curlSuccess()
 	{
 		$this->multiCurl->success( function ( $instance ) {
 
@@ -141,7 +140,7 @@ class CurlHandler
 		} );
 	}
 
-	public function curlError()
+	protected function curlError()
 	{
 		$this->multiCurl->error( function ( $instance ) {
 			$this->errors[] = array(
